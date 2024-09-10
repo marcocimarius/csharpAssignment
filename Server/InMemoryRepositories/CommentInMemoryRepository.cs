@@ -10,9 +10,14 @@ public class CommentInMemoryRepository : ICommentRepository
     public CommentInMemoryRepository()
     {
         comments = new List<Comment>();
+        _ = AddAsync(new Comment("Cats are great!", 1, 1)).Result;
+        _ = AddAsync(new Comment("So true!", 1, 2)).Result;
+        _ = AddAsync(new Comment("They're just so fluffy", 1, 2)).Result;
+        _ = AddAsync(new Comment("Mine's hairless!", 1, 1)).Result;
+        _ = AddAsync(new Comment("Is it sick?!", 1, 4)).Result;
     }
     
-    public Task AddAsync(Comment comment)
+    public Task<Comment> AddAsync(Comment comment)
     {
         comment.Id = comments.Any()
             ? comments.Max(c => c.Id) + 1
@@ -45,7 +50,7 @@ public class CommentInMemoryRepository : ICommentRepository
         return Task.CompletedTask;
     }
 
-    public Task GetSingle(int id)
+    public Task<Comment> GetSingle(int id)
     {
         Comment? comment = comments.SingleOrDefault(c => c.Id == id);
         if (comment == null)

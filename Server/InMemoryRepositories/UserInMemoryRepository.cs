@@ -10,9 +10,13 @@ public class UserInMemoryRepository : IUserRepository
     public UserInMemoryRepository()
     {
         users = new List<User>();
+        _ = AddAsync(new User("trmo", "1234")).Result;
+        _ = AddAsync(new User("mivi", "4321")).Result;
+        _ = AddAsync(new User("jknr", "1243")).Result;
+        _ = AddAsync(new User("kasr", "2143")).Result;
     }
     
-    public Task AddAsync(User user)
+    public Task<User> AddAsync(User user)
     {
         user.Id = users.Any()
             ? users.Max(u => u.Id) + 1
@@ -45,7 +49,7 @@ public class UserInMemoryRepository : IUserRepository
         return Task.CompletedTask;
     }
 
-    public Task GetSingle(int id)
+    public Task<User> GetSingle(int id)
     {
         User? user = users.SingleOrDefault(u => u.Id == id);
         if (user == null)
