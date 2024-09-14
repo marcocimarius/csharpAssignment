@@ -60,8 +60,8 @@ public class CommentInMemoryRepository : ICommentRepository
         return Task.FromResult(comment);
     }
 
-    public IQueryable<Comment> GetMany()
+    public IQueryable<Comment> GetMany(int postId)
     {
-        return comments.AsQueryable();
+        return comments.AsQueryable().Where(c => c.PostId == postId);
     }
 }
