@@ -1,16 +1,23 @@
-﻿using RepositoryContracts;
+﻿using Entities;
+using FileRepositories;
+using RepositoryContracts;
 
 namespace CLI.UI.ManageUsers.UsersCRUD;
 
 public class DeleteUser
 {
-    private IUserRepository _userRepository;
+    // private IUserRepository _userRepository;
     private ManageUsers _manageUsers;
 
-    public DeleteUser(IUserRepository userRepository, ManageUsers manageUsers)
+    // public DeleteUser(IUserRepository userRepository, ManageUsers manageUsers)
+    // {
+    //    _userRepository = userRepository;
+    //    _manageUsers = manageUsers;
+    // }
+    
+    public DeleteUser(ManageUsers manageUsers)
     {
-       _userRepository = userRepository;
-       _manageUsers = manageUsers;
+        _manageUsers = manageUsers;
     }
 
 
@@ -24,7 +31,9 @@ public class DeleteUser
 
     private async Task RemoveUser(int id)
     {
-        Console.WriteLine("Are you sure you want to delete this user: " + _userRepository.GetSingle(id).Result.Username + "? (Y/N)");
+        List<User> users = TestForNow.ReadFromFileAsync<User>().Result;
+        User user = users.SingleOrDefault(user => user.Id == id)!;
+        Console.WriteLine("Are you sure you want to delete this user: " + user.Username + "? (Y/N)");
 
         string? input;
         do
@@ -34,7 +43,8 @@ public class DeleteUser
 
         if (input.ToUpper().Equals("Y"))
         {
-            await _userRepository.DeleteAsync(id);
+            // await _userRepository.DeleteAsync(id);
+            await TestForNow.RemoveOneItemAsync(user);
         }
 
         await DeleteUserMenu();

@@ -1,19 +1,16 @@
 ﻿using Entities;
+using FileRepositories;
 using RepositoryContracts;
 
 namespace CLI.UI.ManagePosts.PostsCRUD;
 
 public class CreateComment
 {
-    private IPostRepository _postRepository;
     private ManagePosts _managePosts;
-    private ICommentRepository _commentRepository;
 
-    public CreateComment(IPostRepository postRepository, ManagePosts managePosts, ICommentRepository commentRepository)
+    public CreateComment(ManagePosts managePosts)
     {
-        _postRepository = postRepository;
         _managePosts = managePosts;
-        _commentRepository = commentRepository;
     }
 
     public async Task AddComment(int postId)
@@ -28,7 +25,7 @@ public class CreateComment
             {
                 if (!input.Equals("EXIT"))
                 {
-                    await _commentRepository.AddAsync(new Comment(input, postId, 1));
+                    await TestForNow.AddOneItemAsync(new Comment(input, postId, 1));
                 }
                 else
                 {

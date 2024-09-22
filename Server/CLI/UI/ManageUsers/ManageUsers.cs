@@ -5,22 +5,21 @@ namespace CLI.UI.ManageUsers;
 
 public class ManageUsers
 {
-    private IUserRepository _userRepository;
     private CliApp _app;
     public ViewAllUsers ViewAllUsers { get; set; }
     private AddUser AddUser { get; set; }
     private UpdateUser UpdateUser { get; set; }
-    private DeleteUser DeleteUser { get; set; }
-
-    public ManageUsers(IUserRepository userRepository, CliApp app)
+    
+    public ManageUsers(CliApp app)
     {
-        _userRepository = userRepository;
         _app = app;
-        ViewAllUsers = new ViewAllUsers(_userRepository, this);
-        AddUser = new AddUser(_userRepository, this);
-        UpdateUser = new UpdateUser(_userRepository, this);
-        DeleteUser = new DeleteUser(_userRepository, this);
+        ViewAllUsers = new ViewAllUsers(this);
+        AddUser = new AddUser(this);
+        UpdateUser = new UpdateUser(this);
+        DeleteUser = new DeleteUser(this);
     }
+
+    private DeleteUser DeleteUser { get; set; }
 
     public async Task ShowMenu()
     {

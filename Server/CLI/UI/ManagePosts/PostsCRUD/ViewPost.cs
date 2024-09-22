@@ -1,19 +1,16 @@
 ﻿using Entities;
+using FileRepositories;
 using RepositoryContracts;
 
 namespace CLI.UI.ManagePosts.PostsCRUD;
 
 public class ViewPost
 {
-    private IPostRepository _postRepository;
     private ManagePosts _managePosts;
-    private ICommentRepository _commentRepository;
 
-    public ViewPost(IPostRepository postRepository, ManagePosts managePosts, ICommentRepository commentRepository)
+    public ViewPost(ManagePosts managePosts)
     {
-        _postRepository = postRepository;
         _managePosts = managePosts;
-        _commentRepository = commentRepository;
     }
 
     public async Task ShowPost(int postId)
@@ -35,14 +32,16 @@ public class ViewPost
 
     private void ShowPostInfo(int id)
     {
-        Post post = _postRepository.GetSingle(id).Result;
+        List<Post> posts = TestForNow.ReadFromFileAsync<Post>().Result;
+        Post post = posts.FirstOrDefault(p => p.Id == id)!;
+        
         Console.WriteLine(post.Title);
         Console.WriteLine(post.Body);
     }
 
     private void ShowPostComments(int id)
     {
-        List<Comment> comments = _commentRepository.GetMany(id).ToList();
+        List<Comment> comments = TestForNow.ReadFromFileAsync<Comment>().Result;
         foreach (var comment in comments)
         {
             Console.WriteLine(comment.Id + ") " + comment.Body);

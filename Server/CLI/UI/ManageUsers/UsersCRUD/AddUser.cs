@@ -1,16 +1,22 @@
 ﻿using Entities;
+using FileRepositories;
 using RepositoryContracts;
 
 namespace CLI.UI.ManageUsers.UsersCRUD;
 
 public class AddUser
 {
-    private IUserRepository _userRepository;
+    // private IUserRepository _userRepository;
     private ManageUsers _manageUsers;
 
-    public AddUser(IUserRepository userRepository, ManageUsers manageUsers)
+    // public AddUser(IUserRepository userRepository, ManageUsers manageUsers)
+    // {
+    //     _userRepository = userRepository;
+    //     _manageUsers = manageUsers;
+    // }
+    
+    public AddUser(ManageUsers manageUsers)
     {
-        _userRepository = userRepository;
         _manageUsers = manageUsers;
     }
 
@@ -18,7 +24,7 @@ public class AddUser
     {
         Console.Clear();
         
-        await this._userRepository.AddAsync(new User(NewUserName(), NewPassword()));
+        await TestForNow.AddOneItemAsync(new User(NewUserName(), NewPassword()));
         await this._manageUsers.ShowMenu();
     }
 
