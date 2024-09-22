@@ -1,16 +1,15 @@
 ﻿using Entities;
+using FileRepositories;
 using RepositoryContracts;
 
 namespace CLI.UI.ManageUsers.UsersCRUD;
 
 public class ViewAllUsers
 {
-    private IUserRepository _userRepository;
     private ManageUsers _manageUsers;
-
-    public ViewAllUsers(IUserRepository userRepository, ManageUsers manageUsers)
-    {
-        _userRepository = userRepository;
+    
+    public ViewAllUsers(ManageUsers manageUsers)
+    { 
         _manageUsers = manageUsers;
     }
 
@@ -37,7 +36,7 @@ public class ViewAllUsers
     public void ShowUsers()
     {
         Console.WriteLine("All users:");
-        List<User> users = _userRepository.GetMany().ToList();
+        List<User> users = TestForNow.ReadFromFileAsync<User>().Result;
 
         foreach (var user in users)
         {

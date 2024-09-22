@@ -1,16 +1,23 @@
 ﻿using Entities;
+using FileRepositories;
 using RepositoryContracts;
 
 namespace CLI.UI.ManageUsers.UsersCRUD;
 
 public class UpdateUser
 {
-    private IUserRepository _userRepository;
+    // private IUserRepository _userRepository;
     private ManageUsers _manageUsers;
 
-    public UpdateUser(IUserRepository userRepository, ManageUsers manageUsers)
+    // public UpdateUser(IUserRepository userRepository, ManageUsers manageUsers)
+    // {
+    //     _userRepository = userRepository;
+    //     _manageUsers = manageUsers;
+    // }
+    
+    public UpdateUser(ManageUsers manageUsers)
     {
-        _userRepository = userRepository;
+        // _userRepository = userRepository;
         _manageUsers = manageUsers;
     }
 
@@ -25,9 +32,12 @@ public class UpdateUser
     private async Task EditUser(int id)
     {
         Console.Clear();
-        Console.WriteLine("Editing user " + this._userRepository.GetSingle(id).Result.Username);
+        List<User> users = TestForNow.ReadFromFileAsync<User>().Result;
+        User user = users.SingleOrDefault(u => u.Id == id)!;
+        Console.WriteLine("Editing user " + user.Username);
         
-        await this._userRepository.UpdateAsync(new User(NewUserName(), NewPassword()));
+        await TestForNow.RemoveOneItemAsync(user);
+        await TestForNow.AddOneItemAsync(new User(NewUserName(), NewPassword()));
         await EditUserMenu();
     }
 

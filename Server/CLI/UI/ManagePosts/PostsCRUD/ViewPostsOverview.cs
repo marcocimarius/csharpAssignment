@@ -1,16 +1,15 @@
 ﻿using Entities;
+using FileRepositories;
 using RepositoryContracts;
 
 namespace CLI.UI.ManagePosts.PostsCRUD;
 
 public class ViewPostsOverview
 {
-    private IPostRepository _postRepository;
     private ManagePosts _managePosts;
 
-    public ViewPostsOverview(IPostRepository postRepository, ManagePosts managePosts)
+    public ViewPostsOverview(ManagePosts managePosts)
     {
-        _postRepository = postRepository;
         _managePosts = managePosts;
     }
 
@@ -24,7 +23,7 @@ public class ViewPostsOverview
 
     private void ShowAllPostsOverview()
     {
-        List<Post> posts = _postRepository.GetMany().ToList();
+        List<Post> posts = TestForNow.ReadFromFileAsync<Post>().Result;
 
         foreach (var post in posts)
         {

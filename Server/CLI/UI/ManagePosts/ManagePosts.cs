@@ -5,24 +5,20 @@ namespace CLI.UI.ManagePosts;
 
 public class ManagePosts
 {
-    private IPostRepository _postRepository;
-    private ICommentRepository _commentRepository;
     private CliApp _app;
     
     private CreatePost CreatePost { get; set; }
     public ViewPost ViewPost { get; set; }
     private ViewPostsOverview ViewPostsOverview { get; set; }
     public CreateComment CreateComment { get; set; }
-
-    public ManagePosts(IPostRepository postRepository, CliApp app, ICommentRepository commentRepository)
+    
+    public ManagePosts(CliApp app)
     {
-        _postRepository = postRepository;
         _app = app;
-        _commentRepository = commentRepository;
-        CreatePost = new CreatePost(_postRepository, this);
-        ViewPost = new ViewPost(_postRepository, this, _commentRepository);
-        ViewPostsOverview = new ViewPostsOverview(_postRepository, this);
-        CreateComment = new CreateComment(_postRepository, this, _commentRepository);
+        CreatePost = new CreatePost(this);
+        ViewPost = new ViewPost(this);
+        ViewPostsOverview = new ViewPostsOverview(this);
+        CreateComment = new CreateComment(this);
     }
 
     public async Task ShowMenu()

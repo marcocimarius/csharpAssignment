@@ -1,16 +1,15 @@
 ﻿using Entities;
+using FileRepositories;
 using RepositoryContracts;
 
 namespace CLI.UI.ManagePosts.PostsCRUD;
 
 public class CreatePost
 {
-    private IPostRepository _postRepository;
     private ManagePosts _managePosts;
     
-    public CreatePost(IPostRepository postRepository, ManagePosts managePosts)
+    public CreatePost(ManagePosts managePosts)
     {
-        _postRepository = postRepository;
         _managePosts = managePosts;
     }
 
@@ -38,6 +37,6 @@ public class CreatePost
             }
         }
         
-        await _postRepository.AddAsync(new Post(title, body, 1));
+        await TestForNow.AddOneItemAsync(new Post(title, body, 1));
     }
 }
