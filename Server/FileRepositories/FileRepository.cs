@@ -3,7 +3,7 @@ using Entities;
 
 namespace FileRepositories;
 
-public static class TestForNow
+public static class FileRepository
 {
     private static readonly Dictionary<Type, string> FilePaths = new Dictionary<Type, string>
     {

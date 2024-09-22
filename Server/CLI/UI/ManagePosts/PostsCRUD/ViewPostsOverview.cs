@@ -23,7 +23,7 @@ public class ViewPostsOverview
 
     private void ShowAllPostsOverview()
     {
-        List<Post> posts = TestForNow.ReadFromFileAsync<Post>().Result;
+        List<Post> posts = FileRepository.ReadFromFileAsync<Post>().Result;
 
         foreach (var post in posts)
         {

@@ -37,6 +37,6 @@ public class CreatePost
             }
         }
         
-        await TestForNow.AddOneItemAsync(new Post(title, body, 1));
+        await FileRepository.AddOneItemAsync(new Post(title, body, 1));
     }
 }

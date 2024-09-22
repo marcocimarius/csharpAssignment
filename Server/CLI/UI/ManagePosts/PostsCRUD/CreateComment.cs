@@ -25,7 +25,7 @@ public class CreateComment
             {
                 if (!input.Equals("EXIT"))
                 {
-                    await TestForNow.AddOneItemAsync(new Comment(input, postId, 1));
+                    await FileRepository.AddOneItemAsync(new Comment(input, postId, 1));
                 }
                 else
                 {

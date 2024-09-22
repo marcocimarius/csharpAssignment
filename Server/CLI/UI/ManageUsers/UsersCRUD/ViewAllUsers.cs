@@ -36,7 +36,7 @@ public class ViewAllUsers
     public void ShowUsers()
     {
         Console.WriteLine("All users:");
-        List<User> users = TestForNow.ReadFromFileAsync<User>().Result;
+        List<User> users = FileRepository.ReadFromFileAsync<User>().Result;
 
         foreach (var user in users)
         {

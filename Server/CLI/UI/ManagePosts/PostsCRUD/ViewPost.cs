@@ -32,7 +32,7 @@ public class ViewPost
 
     private void ShowPostInfo(int id)
     {
-        List<Post> posts = TestForNow.ReadFromFileAsync<Post>().Result;
+        List<Post> posts = FileRepository.ReadFromFileAsync<Post>().Result;
         Post post = posts.FirstOrDefault(p => p.Id == id)!;
         
         Console.WriteLine(post.Title);
@@ -41,7 +41,7 @@ public class ViewPost
 
     private void ShowPostComments(int id)
     {
-        List<Comment> comments = TestForNow.ReadFromFileAsync<Comment>().Result;
+        List<Comment> comments = FileRepository.ReadFromFileAsync<Comment>().Result;
         foreach (var comment in comments)
         {
             Console.WriteLine(comment.Id + ") " + comment.Body);

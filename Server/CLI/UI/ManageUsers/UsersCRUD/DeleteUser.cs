@@ -31,7 +31,7 @@ public class DeleteUser
 
     private async Task RemoveUser(int id)
     {
-        List<User> users = TestForNow.ReadFromFileAsync<User>().Result;
+        List<User> users = FileRepository.ReadFromFileAsync<User>().Result;
         User user = users.SingleOrDefault(user => user.Id == id)!;
         Console.WriteLine("Are you sure you want to delete this user: " + user.Username + "? (Y/N)");
 
@@ -44,7 +44,7 @@ public class DeleteUser
         if (input.ToUpper().Equals("Y"))
         {
             // await _userRepository.DeleteAsync(id);
-            await TestForNow.RemoveOneItemAsync(user);
+            await FileRepository.RemoveOneItemAsync(user);
         }
 
         await DeleteUserMenu();

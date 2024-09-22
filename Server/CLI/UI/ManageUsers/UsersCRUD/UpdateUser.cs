@@ -32,12 +32,12 @@ public class UpdateUser
     private async Task EditUser(int id)
     {
         Console.Clear();
-        List<User> users = TestForNow.ReadFromFileAsync<User>().Result;
+        List<User> users = FileRepository.ReadFromFileAsync<User>().Result;
         User user = users.SingleOrDefault(u => u.Id == id)!;
         Console.WriteLine("Editing user " + user.Username);
         
-        await TestForNow.RemoveOneItemAsync(user);
-        await TestForNow.AddOneItemAsync(new User(NewUserName(), NewPassword()));
+        await FileRepository.RemoveOneItemAsync(user);
+        await FileRepository.AddOneItemAsync(new User(NewUserName(), NewPassword()));
         await EditUserMenu();
     }
 

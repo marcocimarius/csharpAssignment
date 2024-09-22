@@ -24,7 +24,7 @@ public class AddUser
     {
         Console.Clear();
         
-        await TestForNow.AddOneItemAsync(new User(NewUserName(), NewPassword()));
+        await FileRepository.AddOneItemAsync(new User(NewUserName(), NewPassword()));
         await this._manageUsers.ShowMenu();
     }
 
