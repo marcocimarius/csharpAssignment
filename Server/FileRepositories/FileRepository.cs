@@ -50,8 +50,12 @@ public static class FileRepository
     {
         string filePath = CreateEmptyFileIfNotExists<T>();
         
-        List<T> items = JsonSerializer.Deserialize<List<T>>(File.ReadAllTextAsync(filePath).Result) ?? new List<T>();
-        items.Remove(item);
+        List<T>? items = JsonSerializer.Deserialize<List<T>>(File.ReadAllTextAsync(filePath).Result);
+
+        if (items is not null)
+        {
+            items.Remove(item);   
+        }
         
         await File.WriteAllTextAsync(filePath, JsonSerializer.Serialize(items));
     }
