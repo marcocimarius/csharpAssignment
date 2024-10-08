@@ -6,18 +6,10 @@ namespace CLI.UI.ManageUsers.UsersCRUD;
 
 public class UpdateUser
 {
-    // private IUserRepository _userRepository;
     private ManageUsers _manageUsers;
-
-    // public UpdateUser(IUserRepository userRepository, ManageUsers manageUsers)
-    // {
-    //     _userRepository = userRepository;
-    //     _manageUsers = manageUsers;
-    // }
     
     public UpdateUser(ManageUsers manageUsers)
     {
-        // _userRepository = userRepository;
         _manageUsers = manageUsers;
     }
 
@@ -36,7 +28,7 @@ public class UpdateUser
         User user = users.SingleOrDefault(u => u.Id == id)!;
         Console.WriteLine("Editing user " + user.Username);
         
-        await FileRepository.RemoveOneItemAsync(user);
+        await FileRepository.RemoveOneItemAsync<User>(id);
         await FileRepository.AddOneItemAsync(new User(NewUserName(), NewPassword()));
         await EditUserMenu();
     }

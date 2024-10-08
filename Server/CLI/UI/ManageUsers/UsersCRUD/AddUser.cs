@@ -6,14 +6,7 @@ namespace CLI.UI.ManageUsers.UsersCRUD;
 
 public class AddUser
 {
-    // private IUserRepository _userRepository;
     private ManageUsers _manageUsers;
-
-    // public AddUser(IUserRepository userRepository, ManageUsers manageUsers)
-    // {
-    //     _userRepository = userRepository;
-    //     _manageUsers = manageUsers;
-    // }
     
     public AddUser(ManageUsers manageUsers)
     {

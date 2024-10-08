@@ -44,7 +44,7 @@ public class DeleteUser
         if (input.ToUpper().Equals("Y"))
         {
             // await _userRepository.DeleteAsync(id);
-            await FileRepository.RemoveOneItemAsync(user);
+            await FileRepository.RemoveOneItemAsync<User>(id);
         }
 
         await DeleteUserMenu();
