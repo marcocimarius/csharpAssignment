@@ -35,7 +35,7 @@ public class FileRepository
 
     public static async Task<T?> ReadOneFromFileAsync<T>(int id) where T : class
     {
-        List<T> items = await FileRepository.ReadFromFileAsync<T>();
+        List<T> items = await ReadFromFileAsync<T>();
         var item = items.FirstOrDefault(i => i.GetType().GetProperty("Id")!.GetValue(i)!.Equals(id));
 
         return item;

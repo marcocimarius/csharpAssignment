@@ -10,11 +10,11 @@ namespace WebApplication1.Controllers;
 public class UsersController : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<UserDTO>> CreateUser([FromBody] CreateUsersDTO request)
+    public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUsersDto request)
     {
         User user = new User(request.Username, request.Password);
         User created = await FileRepository.AddOneItemAsync(user);
-        UserDTO dto = new()
+        UserDto dto = new()
         {
             Id = created.Id,
             Username = created.Username,
@@ -23,7 +23,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<UserDTO>> GetUser([FromRoute] int id)
+    public async Task<ActionResult<UserDto>> GetUser([FromRoute] int id)
     {
         User? user = await FileRepository.ReadOneFromFileAsync<User>(id);
 
@@ -32,7 +32,7 @@ public class UsersController : ControllerBase
             return NotFound($"User with id {id} not found");
         }
 
-        UserDTO dto = new() { Id = user.Id, Username = user.Username };
+        UserDto dto = new() { Id = user.Id, Username = user.Username };
 
         return Ok(dto);
     }
@@ -65,7 +65,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ActionResult<UserDTO>> UpdateUser([FromRoute] int id, [FromBody] UpdateUsersDTO request)
+    public async Task<ActionResult<UserDto>> UpdateUser([FromRoute] int id, [FromBody] UpdateUsersDto request)
     {
         User? user = await FileRepository.ReadOneFromFileAsync<User>(id);
 
@@ -80,14 +80,14 @@ public class UsersController : ControllerBase
         user.Password = request.Password;
         
         User updatedUser = await FileRepository.AddOneItemAsync(user);
-        UserDTO dto = new() { Id = updatedUser.Id, Username = updatedUser.Username, };
+        UserDto dto = new() { Id = updatedUser.Id, Username = updatedUser.Username, };
         
         return Ok(dto);
     }
 
     [HttpDelete("{id:int}")]
     
-    public async Task<ActionResult<UserDTO>> DeleteUser([FromRoute] int id)
+    public async Task<ActionResult<UserDto>> DeleteUser([FromRoute] int id)
     {
         await FileRepository.RemoveOneItemAsync<User>(id);
         
