@@ -3,7 +3,7 @@ using Entities;
 
 namespace FileRepositories;
 
-public static class FileRepository
+public class FileRepository
 {
     private static readonly Dictionary<Type, string> FilePaths = new Dictionary<Type, string>
     {
@@ -33,28 +33,42 @@ public static class FileRepository
         return items;
     }
 
-    public static async Task AddOneItemAsync<T>(T item) where T : class
+    public static async Task<T?> ReadOneFromFileAsync<T>(int id) where T : class
+    {
+        List<T> items = await ReadFromFileAsync<T>();
+        var item = items.FirstOrDefault(i => i.GetType().GetProperty("Id")!.GetValue(i)!.Equals(id));
+
+        return item;
+    }
+
+    public static async Task<T> AddOneItemAsync<T>(T item) where T : class
     {
         string filePath = CreateEmptyFileIfNotExists<T>();
         
-        List<T> items = JsonSerializer.Deserialize<List<T>>(File.ReadAllTextAsync(filePath).Result) ?? new List<T>();
+        List<T> items = JsonSerializer.Deserialize<List<T>>(await File.ReadAllTextAsync(filePath)) ?? new List<T>();
 
         int maxId = items.Count > 0 ? items.Max(i => (int)i.GetType().GetProperty("Id")!.GetValue(i)!) : 1;
         item.GetType().GetProperty("Id")!.SetValue(item, maxId + 1);
         items.Add(item);
         
         await File.WriteAllTextAsync(filePath, JsonSerializer.Serialize(items));
-    }
 
-    public static async Task RemoveOneItemAsync<T>(T item) where T : class
+        return item;
+    }
+    
+    public static async Task RemoveOneItemAsync<T>(int id) where T : class
     {
         string filePath = CreateEmptyFileIfNotExists<T>();
         
-        List<T>? items = JsonSerializer.Deserialize<List<T>>(File.ReadAllTextAsync(filePath).Result);
+        List<T>? items = JsonSerializer.Deserialize<List<T>>(await File.ReadAllTextAsync(filePath));
 
         if (items is not null)
         {
-            items.Remove(item);   
+            var item = items.FirstOrDefault(i => (int)i.GetType().GetProperty("Id")!.GetValue(i)! == id);
+            if (item is not null)
+            {
+                items.Remove(item);
+            }
         }
         
         await File.WriteAllTextAsync(filePath, JsonSerializer.Serialize(items));
