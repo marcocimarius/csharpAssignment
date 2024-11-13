@@ -13,4 +13,6 @@ public class Comment
         PostId = postId;
         UserId = userId;
     }
+    
+    private Comment() {}
 }

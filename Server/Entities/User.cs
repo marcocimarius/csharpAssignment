@@ -11,4 +11,6 @@ public class User
         Username = userName;
         Password = password;
     }
+    
+    private User() {}
 }
